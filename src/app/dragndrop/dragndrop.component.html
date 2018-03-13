@@ -1,0 +1,31 @@
+<label>SearchFor:</label>
+<input type="text" [(ngModel)]="search" (ngModelChange)="onSearch($event)">
+<div dnd-sortable-container [sortableData]="userData">
+<div *ngFor="let user of userData; let i=index" dnd-sortable [sortableIndex]="i">
+
+  <input type="text" [(ngModel)]="user.firstName"> 
+   <input type="text" [(ngModel)]="user.lastName">
+  <input type="number" [(ngModel)]="user.age">
+  <select [(ngModel)]="user.gender">
+    <option *ngFor="let gender of Gender" [ngValue]="gender">{{ gender }}</option>
+  </select>
+</div>
+</div> 
+<button (click)="addDetails()">Add User Details</button>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm)" *ngIf="addUser" (ngModelChange)="onValueChanged($event)">
+    <label>FirstName:</label>
+    <input type="text" formControlName="firstName">
+  
+    <label>LastName:</label>
+    <input type="text" formControlName="lastName">
+  
+    <label>Age:</label>
+    <input type="number" formControlName="age">
+    
+    <label>Gender:</label>
+    <select formControlName="gender">
+      <option *ngFor="let gender of Gender" [ngValue]="gender">{{ gender }}</option>
+    </select>
+
+    <input type="submit" [disabled]="!userForm.valid">
+</form>
